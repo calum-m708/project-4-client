@@ -22,3 +22,17 @@ export const getCardById = async (id) => {
 
   return data;
 };
+
+export const createCard = async (card) => {
+  const options = {
+    method: 'POST',
+    url: 'http://localhost:8000/cards/',
+    data: card
+    // headers: {
+    //   authorization: `Bearer ${window.sessionStorage.getItem('token')}`
+    // }
+  };
+  const { data } = await axios.request(options);
+
+  return data;
+};

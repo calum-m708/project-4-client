@@ -10,12 +10,14 @@ const ShowCard = () => {
     const getData = async () => {
       try {
         const data = await getCardById(id);
+        console.log('data is', data);
         setCard(data);
       } catch (err) {
         console.error(err);
       }
     };
     getData();
+    console.log('card is', card);
   }, [id]);
 
   return (
@@ -30,7 +32,7 @@ const ShowCard = () => {
               <div className="column is-half">
                 <figure className="image">
                   <img
-                    src={`https://res.cloudinary.com/dthhn8y5s/${image}`}
+                    src={`https://res.cloudinary.com/dthhn8y5s/${card.image}`}
                     alt={card.name}
                   />
                 </figure>
