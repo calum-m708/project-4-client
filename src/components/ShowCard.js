@@ -1,10 +1,13 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getCardById } from '../api/card';
+import { credentials, updateCollection } from '../api/auth';
 
 const ShowCard = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [card, setCard] = React.useState(null);
+  const [currentUser, setUser] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -18,6 +21,30 @@ const ShowCard = () => {
     };
     getData();
     console.log('card is', card);
+  }, [id]);
+
+  const addCard = async () => {
+    try {
+      await updateCollection(currentUser.id, {
+        collection: [...currentUser.collection, card.id]
+      });
+      navigate('/cards');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  React.useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    const getData = async () => {
+      try {
+        const data = await credentials(token);
+        setUser(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getData();
   }, [id]);
 
   return (
@@ -43,6 +70,11 @@ const ShowCard = () => {
                 <p>Charisma: {card.charisma}</p>
                 <p>Intelligence: {card.intelligence}</p>
                 <p>Special: {card.special}</p>
+                {currentUser?.collection.length < 10 && (
+                  <Link to="#" onClick={addCard}>
+                    <p>Add Card to Collection</p>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

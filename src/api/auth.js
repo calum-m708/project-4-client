@@ -38,3 +38,18 @@ export const credentials = async (token) => {
 
   return data;
 };
+
+export const updateCollection = async (id, newCollection) => {
+  const token = sessionStorage.getItem('token');
+
+  const options = {
+    method: 'PATCH',
+    url: `http://localhost:8000/authentication/users/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    data: newCollection
+  };
+  const { data } = await axios.request(options);
+  return data;
+};

@@ -6,6 +6,7 @@ import ShowCard from './ShowCard';
 import Login from './auth/login';
 import Register from './auth/register';
 import CreateCard from './CreateCard';
+import Profile from './Profile';
 import '../styles/style.scss';
 
 const App = () => (
@@ -18,6 +19,7 @@ const App = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/create" element={<CreateCard />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   </BrowserRouter>
 );

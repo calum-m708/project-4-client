@@ -1,16 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { getLoggedInUserId } from '../lib/auth';
+import { credentials } from '../api/auth';
 
 const Navbar = () => {
-  const [loginState, setLoginState] = useState(getLoggedInUserId());
+  const [loginState, setLoginState] = React.useState(null);
   let location = useLocation();
   const navigate = useNavigate();
+  const [currentUser, setUser] = React.useState(null);
 
-  useEffect(() => {
-    setLoginState(getLoggedInUserId());
-    console.log('login state is:', loginState);
+  React.useEffect(() => {
+    if (sessionStorage.getItem('token')) {
+      setLoginState(true);
+    } else {
+      setLoginState(false);
+    }
   }, [location]);
+
+  React.useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    const getData = async () => {
+      try {
+        const data = await credentials(token);
+        setUser(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getData();
+    console.log('working');
+  }, []);
 
   const logout = () => {
     sessionStorage.removeItem('token');
@@ -46,9 +64,11 @@ const Navbar = () => {
             <Link to="#" className="navbar-item" onClick={logout}>
               Logout
             </Link>
-            <Link to="/profile" className="navbar-item">
-              {loginState.username}
-            </Link>
+            {currentUser && (
+              <Link to="/profile" className="navbar-item">
+                {currentUser.username}
+              </Link>
+            )}
           </>
         )}
       </div>
