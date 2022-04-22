@@ -5,5 +5,6 @@ export async function getLoggedInUserId() {
   if (!token) return false; //safety in case there's no token
 
   const userObject = await credentials(token);
+  console.log('user object:', userObject);
   return userObject;
 }

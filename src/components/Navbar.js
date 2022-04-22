@@ -9,7 +9,7 @@ const Navbar = () => {
 
   useEffect(() => {
     setLoginState(getLoggedInUserId());
-    console.log(loginState);
+    console.log('login state is:', loginState);
   }, [location]);
 
   const logout = () => {
