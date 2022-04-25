@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { credentials } from '../api/auth';
 
 const Navbar = () => {
   const [loginState, setLoginState] = React.useState(null);
   let location = useLocation();
   const navigate = useNavigate();
-  const [currentUser, setUser] = React.useState(null);
 
   React.useEffect(() => {
     if (sessionStorage.getItem('token')) {
@@ -16,59 +14,56 @@ const Navbar = () => {
     }
   }, [location]);
 
-  React.useEffect(() => {
-    const token = sessionStorage.getItem('token');
-    const getData = async () => {
-      try {
-        const data = await credentials(token);
-        setUser(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    getData();
-    console.log('working');
-  }, []);
-
   const logout = () => {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('userid');
     navigate('/');
   };
   return (
-    <nav className="navbar">
+    <nav className="navbar has-background-black">
       <div className="navbar-brand">
-        <Link to="/" className="navbar-item">
+        <Link to="/" className="navbar-item has-text-white">
           Home
         </Link>
-        <Link to="/cards" className="navbar-item">
+        <Link to="/cards" className="navbar-item has-text-white">
           Card Index
         </Link>
         {loginState && (
-          <Link to="/create" className="navbar-item">
-            Add card
-          </Link>
+          <>
+            <Link to="/create" className="navbar-item has-text-white">
+              Add card
+            </Link>
+            <Link to="/play" className="navbar-item has-text-white">
+              Play
+            </Link>
+          </>
         )}
       </div>
       <div className="navbar-end">
         {!loginState ? (
           <>
-            <Link to="/login" className="navbar-item">
+            <Link to="/login" className="navbar-item has-text-white">
               Login
             </Link>
-            <Link to="/register" className="navbar-item">
+            <Link to="/register" className="navbar-item has-text-white">
               Register
             </Link>
           </>
         ) : (
           <>
-            <Link to="#" className="navbar-item" onClick={logout}>
+            <Link
+              to="#"
+              className="navbar-item has-text-white"
+              onClick={logout}
+            >
               Logout
             </Link>
-            {currentUser && (
-              <Link to="/profile" className="navbar-item">
-                {currentUser.username}
+            {
+              <Link to="/profile" className="navbar-item has-text-white">
+                {sessionStorage.getItem('username')}
               </Link>
-            )}
+            }
           </>
         )}
       </div>

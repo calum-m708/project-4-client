@@ -36,3 +36,14 @@ export const createCard = async (card) => {
 
   return data;
 };
+
+export const getUserCards = async (token) => {
+  const options = {
+    method: 'GET',
+    url: 'http://localhost:8000/cards/created/',
+    headers: { Authorization: `Bearer ${token}` }
+  };
+  const { data } = await axios.request(options);
+
+  return data;
+};

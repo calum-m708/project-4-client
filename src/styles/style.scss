@@ -1,1 +1,46 @@
 @import '~bulma/bulma.sass';
+@import url(./partials/_slick-theme.css);
+@import url(./partials/_slick.css);
+
+html {
+  background-color: hsl(0, 0%, 21%);
+}
+
+p,h1,h2,h3,h4, .label {
+  color: white
+}
+
+.navbar-item:hover {
+  background-color: black;
+}
+
+.slider-element {
+  display: flex;
+  justify-content: center;
+}
+
+.slider-element img {
+  justify-self: center;
+  width: 250px;
+  object-fit: cover;
+  border-radius: 0.25rem;
+}
+
+.active-card{
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  align-items: center;
+}
+
+.stat {
+  border: 1px white solid;
+  border-radius: 5px;
+  padding: 3px;
+  color: white
+}
+
+.stat:hover {
+  font-weight: bold;
+  color: white
+}

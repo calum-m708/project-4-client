@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
+
 const CarouselUploaded = ({ uploadedCards }) => {
-  console.log('uploaded cards is', uploadedCards);
   var settings = {
     dots: true,
     infinite: false,

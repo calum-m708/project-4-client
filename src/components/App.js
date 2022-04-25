@@ -7,6 +7,7 @@ import Login from './auth/login';
 import Register from './auth/register';
 import CreateCard from './CreateCard';
 import Profile from './Profile';
+import Match from './Match';
 import '../styles/style.scss';
 
 const App = () => (
@@ -20,6 +21,7 @@ const App = () => (
       <Route path="/register" element={<Register />} />
       <Route path="/create" element={<CreateCard />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/play" element={<Match />} />
     </Routes>
   </BrowserRouter>
 );

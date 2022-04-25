@@ -1,13 +1,13 @@
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getCardById } from '../api/card';
-import { credentials, updateCollection } from '../api/auth';
+import { getCollection, updateCollection } from '../api/auth';
 
 const ShowCard = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [card, setCard] = React.useState(null);
-  const [currentUser, setUser] = React.useState(null);
+  const [currentCollection, setCollection] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -25,8 +25,8 @@ const ShowCard = () => {
 
   const addCard = async () => {
     try {
-      await updateCollection(currentUser.id, {
-        collection: [...currentUser.collection, card.id]
+      await updateCollection(sessionStorage.getItem('userid'), {
+        collection: [...currentCollection.collection, card.id]
       });
       navigate('/cards');
     } catch (err) {
@@ -35,11 +35,11 @@ const ShowCard = () => {
   };
 
   React.useEffect(() => {
-    const token = sessionStorage.getItem('token');
+    const id = sessionStorage.getItem('userid');
     const getData = async () => {
       try {
-        const data = await credentials(token);
-        setUser(data);
+        const data = await getCollection(id);
+        setCollection(data);
       } catch (err) {
         console.error(err);
       }
@@ -54,7 +54,9 @@ const ShowCard = () => {
           <p>Loading...</p>
         ) : (
           <div>
-            <h2 className="title has-text-centered">{card.name}</h2>
+            <h2 className="title has-text-centered has-text-white">
+              {card.name}
+            </h2>
             <div className="columns">
               <div className="column is-half">
                 <figure className="image">
@@ -70,7 +72,7 @@ const ShowCard = () => {
                 <p>Charisma: {card.charisma}</p>
                 <p>Intelligence: {card.intelligence}</p>
                 <p>Special: {card.special}</p>
-                {currentUser?.collection.length < 10 && (
+                {currentCollection?.collection.length < 10 && (
                   <Link to="#" onClick={addCard}>
                     <p>Add Card to Collection</p>
                   </Link>

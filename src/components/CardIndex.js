@@ -20,11 +20,13 @@ const CardIndex = () => {
   return (
     <section className="section">
       <div className="container">
-        {!cards ? (
-          <p>Loading Cards...</p>
-        ) : (
-          cards.map((card) => <CardCard key={card.id} {...card}></CardCard>)
-        )}
+        <div className="columns is-multiline">
+          {!cards ? (
+            <p>Loading Cards...</p>
+          ) : (
+            cards.map((card) => <CardCard key={card.id} {...card}></CardCard>)
+          )}
+        </div>
       </div>
     </section>
   );

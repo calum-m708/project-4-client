@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
+
 const CarouselCollection = ({ collection }) => {
   console.log('collection is', collection);
+
   var settings = {
     dots: true,
     infinite: false,
@@ -40,7 +42,7 @@ const CarouselCollection = ({ collection }) => {
   return (
     <div className="slider">
       <Slider {...settings}>
-        {collection.map((card) => (
+        {collection?.map((card) => (
           <div key={card.id} className="slider-element">
             <Link to={`/cards/${card.id}`}>
               <img

@@ -1,22 +1,22 @@
 import React from 'react';
 import { credentials } from '../api/auth';
-import { getAllCards } from '../api/card';
+import { getUserCards } from '../api/card';
 import CarouselUploaded from './CarouselUploaded';
 import CarouselCollection from './CarouselCollection';
-
+import { Link, useLocation } from 'react-router-dom';
 const Profile = () => {
-  const [currentUser, setUser] = React.useState(null);
+  let location = useLocation();
   const [uploadedCards, setUploadedCards] = React.useState(null);
+  const [currentUser, setUser] = React.useState(null);
 
   React.useEffect(() => {
-    const token = sessionStorage.getItem('token');
     const getData = async () => {
       try {
-        const data = await credentials(token);
-        setUser(data);
-        const cards = await getAllCards();
-        setUploadedCards(cards.filter((card) => card.created_by === data.id));
-        console.log(uploadedCards);
+        const token = sessionStorage.getItem('token');
+        const cards = await getUserCards(token);
+        setUploadedCards(cards);
+        const userdata = await credentials(token);
+        setUser(userdata);
       } catch (err) {
         console.error(err);
       }
