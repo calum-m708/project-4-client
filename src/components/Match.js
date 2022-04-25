@@ -58,6 +58,7 @@ const Match = () => {
   React.useEffect(() => {
     if (aiDeck) {
       setAiActiveCard(aiDeck[Math.floor(Math.random() * aiDeck?.length)]);
+      console.log('ai active card', aiActiveCard);
       console.log('graveyard', graveyard);
     }
   }, [aiDeck]);
@@ -77,84 +78,99 @@ const Match = () => {
     return tempCollection;
   }
 
-  function pickStat(e) {
+  async function pickStat(e) {
     const statName = e.target.name;
     const playerStat = playerActiveCard[statName];
     const aiStat = aiActiveCard[statName];
+    let playerLost = false;
     console.log(`${aiActiveCard.name} has ${aiStat} ${statName}`);
     if (playerStat === aiStat) {
       console.log('draw');
       draw();
-      setActivePlayer(activePlayer);
     } else if (playerStat > aiStat) {
       console.log('player wins');
       winRound();
-      setActivePlayer(true);
     } else {
       console.log('ai wins');
       loseRound();
-      setActivePlayer(false);
+      playerLost = true;
     }
     setAiDeck(aiDeck.filter((card) => card.id !== aiActiveCard.id));
     setPlayerDeck(playerDeck.filter((card) => card.id !== playerActiveCard.id));
+    // await sleep(1000);
+    if (playerLost) {
+      setActivePlayer(false);
+    }
     console.log('playerDeck is', playerDeck);
   }
   function winRound() {
     setWonCards([...wonCards, playerActiveCard.id, aiActiveCard.id]);
-    setActivePlayer(true);
   }
   function loseRound() {
     setGraveyard([...graveyard, playerActiveCard.id, aiActiveCard.id]);
-    setActivePlayer(false);
   }
   function draw() {
     setWonCards([...wonCards, playerActiveCard.id]);
     setGraveyard([...graveyard, aiActiveCard.id]);
-    setActivePlayer(activePlayer);
   }
 
-  function aiTurn() {
-    let highestStat = 0;
-    let highestStatName;
-    for (let stat in aiActiveCard) {
-      if (
-        stat === 'charisma' ||
-        stat === 'strength' ||
-        stat === 'intelligence' ||
-        stat === 'special'
-      ) {
-        if (aiActiveCard[stat] > highestStat) {
-          highestStat = aiActiveCard[stat];
-          highestStatName = stat;
-        }
-      }
-    }
-    let currentActivePlayer = activePlayer;
-    let playerStat = playerActiveCard[highestStatName];
-    if (playerStat === highestStat) {
-      console.log('draw');
-      draw();
-      setActivePlayer(activePlayer);
-    } else if (playerStat > highestStat) {
-      console.log('player wins');
-      winRound();
-      setActivePlayer(true);
-    } else {
-      console.log('ai wins');
-      loseRound();
-      setActivePlayer(false);
-    }
-    setAiDeck(aiDeck.filter((card) => card.id !== aiActiveCard.id));
-    setPlayerDeck(playerDeck.filter((card) => card.id !== playerActiveCard.id));
-    console.log('playerDeck is', playerDeck);
-    sleep(1000);
-    if (currentActivePlayer === activePlayer) {
-      aiTurn();
-    }
-  }
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+  // React.useEffect(async () => {
+  //   if (playerDeck) {
+  //     let deckLength = playerDeck.length;
+  //     let aiLost = false;
+  //     for (let i = 0; i < deckLength; i++) {
+  //       await sleep(1000);
+  //       if (activePlayer) {
+  //         break;
+  //       }
+  //       let highestStat = 0;
+  //       let highestStatName;
+  //       console.log('ACTIVE CARD:', aiActiveCard);
+  //       for (let stat in aiActiveCard) {
+  //         if (
+  //           stat === 'charisma' ||
+  //           stat === 'strength' ||
+  //           stat === 'intelligence' ||
+  //           stat === 'special'
+  //         ) {
+  //           if (aiActiveCard[stat] > highestStat) {
+  //             highestStat = aiActiveCard[stat];
+  //             highestStatName = stat;
+  //           }
+  //         }
+  //       }
+  //       let currentActivePlayer = activePlayer;
+  //       let playerStat = playerActiveCard[highestStatName];
+  //       console.log('PLAYER STAT:', playerStat);
+  //       console.log('AI STAT: ', highestStat);
+  //       if (playerStat === highestStat) {
+  //         console.log('draw');
+  //         draw();
+  //       } else if (playerStat > highestStat) {
+  //         console.log('player wins');
+  //         winRound();
+  //         aiLost = true;
+  //       } else {
+  //         console.log('ai wins');
+  //         loseRound();
+  //       }
+  //       setAiDeck(aiDeck.filter((card) => card.id !== aiActiveCard.id));
+  //       setPlayerDeck(
+  //         playerDeck.filter((card) => card.id !== playerActiveCard.id)
+  //       );
+  //       console.log('playerDeck is', playerDeck);
+  //       await sleep(1000);
+  //       if (aiLost) {
+  //         setActivePlayer(true);
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }, [activePlayer]);
+
+  // async function sleep(ms) {
+  //   return new Promise((resolve) => setTimeout(resolve, ms));
+  // }
   const endgame = async () => {
     const newCollection = [
       ...simpleCollection.filter((card) => !graveyard.includes(card)),
@@ -168,9 +184,6 @@ const Match = () => {
       console.error(err);
     }
   };
-  React.useEffect(() => {
-    if (!activePlayer) aiTurn();
-  }, [activePlayer]);
 
   return !playerActiveCard ? (
     <p className="has-text-white">loading game</p>
@@ -181,22 +194,22 @@ const Match = () => {
         src={`https://res.cloudinary.com/dthhn8y5s/${playerActiveCard.image}`}
         alt={playerActiveCard.name}
       />
-      {!!activePlayer ? (
-        <>
-          <Link to="#" onClick={pickStat} name="strength" className="stat">
-            Strength: {playerActiveCard.strength}
-          </Link>
-          <Link to="#" onClick={pickStat} name="charisma" className="stat">
-            Charisma: {playerActiveCard.charisma}
-          </Link>
-          <Link to="#" onClick={pickStat} name="intelligence" className="stat">
-            Intelligence: {playerActiveCard.intelligence}
-          </Link>
-          <Link to="#" onClick={pickStat} name="special" className="stat">
-            Special: {playerActiveCard.special}
-          </Link>
-        </>
-      ) : (
+      {/* {!!activePlayer ? ( */}
+      <>
+        <Link to="#" onClick={pickStat} name="strength" className="stat">
+          Strength: {playerActiveCard.strength}
+        </Link>
+        <Link to="#" onClick={pickStat} name="charisma" className="stat">
+          Charisma: {playerActiveCard.charisma}
+        </Link>
+        <Link to="#" onClick={pickStat} name="intelligence" className="stat">
+          Intelligence: {playerActiveCard.intelligence}
+        </Link>
+        <Link to="#" onClick={pickStat} name="special" className="stat">
+          Special: {playerActiveCard.special}
+        </Link>
+      </>
+      {/* ) : (
         <>
           <p name="strength" className="stat">
             Strength: {playerActiveCard.strength}
@@ -211,7 +224,7 @@ const Match = () => {
             Special: {playerActiveCard.special}
           </p>
         </>
-      )}
+      )} */}
     </div>
   );
 };
