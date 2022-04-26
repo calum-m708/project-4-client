@@ -44,3 +44,15 @@ p,h1,h2,h3,h4, .label {
   font-weight: bold;
   color: white
 }
+
+.game-field {
+  display: flex;
+  justify-content: space-around;
+}
+
+.title-page {
+  font-size: 78px;
+  display: flex;
+  width: 100vw;
+  text-align: center;
+}

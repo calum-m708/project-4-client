@@ -31,18 +31,18 @@ function Register() {
   }
 
   return (
-    <section className="is-fullheight-with-navbar form-page">
-      <div className="container">
-        <div className="columns">
+    <section className="is-fullheight-with-navbar has-background-dark form-page">
+      <div className="container pt-6">
+        <div className="columns pt-6">
           <form
-            className="column is-half is-offset-one-quarter box"
+            className="column is-half is-offset-one-quarter box has-background-grey"
             onSubmit={handleSubmit}
           >
             <div className="field">
               <label className="label has-text-centered">Username</label>
               <div className="control">
                 <input
-                  className="input"
+                  className="input has-background-grey-lighter"
                   name="username"
                   onChange={handleChange}
                   value={user.username}
@@ -53,7 +53,7 @@ function Register() {
               <label className="label has-text-centered">Email</label>
               <div className="control">
                 <input
-                  className="input"
+                  className="input has-background-grey-lighter"
                   name="email"
                   onChange={handleChange}
                   value={user.email}
@@ -65,7 +65,7 @@ function Register() {
               <div className="control">
                 <input
                   type="password"
-                  className="input"
+                  className="input has-background-grey-lighter"
                   name="password"
                   onChange={handleChange}
                   value={user.password}
@@ -79,7 +79,7 @@ function Register() {
               <div className="control">
                 <input
                   type="password"
-                  className="input"
+                  className="input has-background-grey-lighter"
                   name="password_confirmation"
                   onChange={handleChange}
                   value={user.password_confirmation}

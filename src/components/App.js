@@ -14,7 +14,14 @@ const App = () => (
   <BrowserRouter>
     <Navbar />
     <Routes>
-      <Route path="/" element={<h1>Hello world</h1>} />
+      <Route
+        path="/"
+        element={
+          <h1 className="title-page is-centered">
+            Top Trumps : eXtreme edition
+          </h1>
+        }
+      />
       <Route path="/cards" element={<CardIndex />} />
       <Route path="/cards/:id" element={<ShowCard />} />
       <Route path="/login" element={<Login />} />

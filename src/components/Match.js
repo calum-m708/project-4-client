@@ -58,7 +58,7 @@ const Match = () => {
   React.useEffect(() => {
     if (aiDeck) {
       setAiActiveCard(aiDeck[Math.floor(Math.random() * aiDeck?.length)]);
-      console.log('ai active card', aiActiveCard);
+      // console.log('ai active card', aiActiveCard);
       console.log('graveyard', graveyard);
     }
   }, [aiDeck]);
@@ -188,28 +188,29 @@ const Match = () => {
   return !playerActiveCard ? (
     <p className="has-text-white">loading game</p>
   ) : (
-    <div className="active-card">
-      <h1>{playerActiveCard.name}</h1>
-      <img
-        src={`https://res.cloudinary.com/dthhn8y5s/${playerActiveCard.image}`}
-        alt={playerActiveCard.name}
-      />
-      {/* {!!activePlayer ? ( */}
-      <>
-        <Link to="#" onClick={pickStat} name="strength" className="stat">
-          Strength: {playerActiveCard.strength}
-        </Link>
-        <Link to="#" onClick={pickStat} name="charisma" className="stat">
-          Charisma: {playerActiveCard.charisma}
-        </Link>
-        <Link to="#" onClick={pickStat} name="intelligence" className="stat">
-          Intelligence: {playerActiveCard.intelligence}
-        </Link>
-        <Link to="#" onClick={pickStat} name="special" className="stat">
-          Special: {playerActiveCard.special}
-        </Link>
-      </>
-      {/* ) : (
+    <div className="game-field">
+      <div className="active-card">
+        <h1>{playerActiveCard.name}</h1>
+        <img
+          src={`https://res.cloudinary.com/dthhn8y5s/${playerActiveCard.image}`}
+          alt={playerActiveCard.name}
+        />
+        {/* {!!activePlayer ? ( */}
+        <>
+          <Link to="#" onClick={pickStat} name="strength" className="stat">
+            Strength: {playerActiveCard.strength}
+          </Link>
+          <Link to="#" onClick={pickStat} name="charisma" className="stat">
+            Charisma: {playerActiveCard.charisma}
+          </Link>
+          <Link to="#" onClick={pickStat} name="intelligence" className="stat">
+            Intelligence: {playerActiveCard.intelligence}
+          </Link>
+          <Link to="#" onClick={pickStat} name="special" className="stat">
+            Special: {playerActiveCard.special}
+          </Link>
+        </>
+        {/* ) : (
         <>
           <p name="strength" className="stat">
             Strength: {playerActiveCard.strength}
@@ -225,6 +226,16 @@ const Match = () => {
           </p>
         </>
       )} */}
+      </div>
+      {!!aiActiveCard && (
+        <div className="active-card">
+          <h1>{aiActiveCard.name}</h1>
+          <img
+            src={`https://res.cloudinary.com/dthhn8y5s/${aiActiveCard.image}`}
+            alt={playerActiveCard.name}
+          />
+        </div>
+      )}
     </div>
   );
 };

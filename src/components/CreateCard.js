@@ -12,10 +12,10 @@ const CreateCard = () => {
     special: 0,
     image: ''
   });
-  const statsTotal = 300;
+  const statsTotal = 250;
   const [currentTotal, setCurrentTotal] = React.useState(statsTotal);
-  function handleChange(event) {
-    setNewCard({ ...newCard, [event.target.name]: event.target.value });
+
+  React.useEffect(() => {
     const statsUsed =
       parseInt(newCard.strength) +
       parseInt(newCard.charisma) +
@@ -23,6 +23,10 @@ const CreateCard = () => {
       parseInt(newCard.special);
     console.log(`total ${statsTotal}, used ${statsUsed}`);
     setCurrentTotal(statsTotal - statsUsed);
+  }, [newCard]);
+
+  function handleChange(event) {
+    setNewCard({ ...newCard, [event.target.name]: event.target.value });
   }
   function handleSubmit(event) {
     event.preventDefault();

@@ -22,11 +22,11 @@ const Login = () => {
   };
 
   return (
-    <section className="is-fullheight-with-navbar">
-      <div className="container">
-        <div className="columns">
+    <section className="is-fullheight-with-navbar has-background-dark form-page">
+      <div className="container pt-6">
+        <div className="columns pt-6">
           <form
-            className="column is-half is-offset-one-quarter box"
+            className="column is-half is-offset-one-quarter box has-background-grey"
             onSubmit={handleSubmit}
           >
             <div className="field">
@@ -36,7 +36,7 @@ const Login = () => {
               <div className="control">
                 <input
                   type="text"
-                  className="input"
+                  className="input has-background-grey-lighter"
                   id="email"
                   value={emailValue}
                   onChange={handleEmailChange}
@@ -50,7 +50,7 @@ const Login = () => {
               <div className="control">
                 <input
                   type="password"
-                  className="input"
+                  className="input has-background-grey-lighter"
                   id="password"
                   value={passwordValue}
                   onChange={handlePasswordChange}
