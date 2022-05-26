@@ -5,8 +5,8 @@ import { getAllCards } from '../api/card';
 import { Link } from 'react-router-dom';
 
 const Match = () => {
-  const location = useLocation();
-  const [activePlayer, setActivePlayer] = React.useState(true);
+  // const location = useLocation();
+  // const [activePlayer, setActivePlayer] = React.useState(true);
   const [playerDeck, setPlayerDeck] = React.useState(null);
   const [wonCards, setWonCards] = React.useState([]);
   const [graveyard, setGraveyard] = React.useState([]);
