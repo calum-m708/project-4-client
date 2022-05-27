@@ -1,6 +1,6 @@
 # Project 4 - 'Top Trumps: Extreme Edition'
 
-Top Trumps: Extreme Edition is a full stack app, utilising Django & PostgreSQL for the backend, and React.js for the frontend. The concept for the app was to create a playable version of Top Trumps that could support players uploading their own cards, and build their collection by playing games against the computer. This as my fourth project for General Assembly's Software Engineering Immersive course. I worked on this project on my own.
+Top Trumps: Extreme Edition is a full stack app, utilising Django & PostgreSQL for the backend, and React.js for the frontend. The concept for the app was to create a playable version of Top Trumps that could support players uploading their own cards, and build their collection by playing games against the computer. This is my fourth project for General Assembly's Software Engineering Immersive course. I worked on this project on my own.
 
 **Duration** - 7 days
 
